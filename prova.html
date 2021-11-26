@@ -7,6 +7,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="atancredi.js"></script>
 
+    <style>
+        caption {
+            background: #666666;
+            color: #fff;
+            padding: 6px;
+            height: 22px;
+        }
+    </style>
+
     <script>
 
         //dummy dataSet
@@ -28,14 +37,49 @@
         // SHOW THE DATA IN THE HTML TABLE
         function ShowData(container,ds) {
 
+            function generateRow(rowData) {
+                var s = "<tr>";
+                var cell = "<td>{0}</td>"
+
+                //for every column add the cell
+                rowData.forEach(function (value, index) {
+                    s += format(cell,[value]);
+                });
+
+                s += "</tr>";
+                return s;
+            }
+
             //enumerate the currently rendered tables
             function GetTableNumber(){
+                return $('table.dataTable').length;
+            }
 
+            //get the new table's id
+            function GetTableID() {
+                return "dataTable-"+(GetTableNumber()+1)
+            }
+
+            //append the table
+            var tableID = GetTableID();
+            container.append('<table class="dataTable" id="' + tableID + '" ></table>');
+            var table = $("#" + tableID);
+
+            //append the caption of the table if exists
+            table.append("<caption>" + ds["caption"] + "</caption>");
+
+            //append the table head
+            table.append('<thead>' + generateRow(ds["head"]) + '</thead>');
+
+            //create the table body
+            table.append("<tbody></tbody>");
+            var tbody = table.find("tbody");
+
+            for (var i = 0; i < lenght(ds["data"]); i++) {
+                tbody.append(generateRow(ds["data"][i]))
             }
 
         }
-
-        ShowData($("#tabRisultati"), ds);
 
     </script>
 
@@ -45,6 +89,10 @@
     <div id="tabRisultati">
 
     </div>
+
+    <script>
+        ShowData($("#tabRisultati"), ds);
+    </script>
 
 </body>
 </html>
