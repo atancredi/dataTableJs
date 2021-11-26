@@ -8,12 +8,17 @@
     <script src="atancredi.js"></script>
 
     <style>
-        caption {
+        .dataTable caption {
             background: #666666;
             color: #fff;
             padding: 6px;
             height: 22px;
         }
+
+        .dataTable thead {
+            background: #c4c4c4;
+        }
+
     </style>
 
     <script>
@@ -37,8 +42,21 @@
         // SHOW THE DATA IN THE HTML TABLE
         function ShowData(container,ds) {
 
-            function generateRow(rowData) {
-                var s = "<tr>";
+            function generateRow(rowData, options) {
+                var s = "";
+
+                //if options has something inside
+                if (lenght(options) > 0) {
+                    var r = '<tr style="{0}">';
+                    var op = "";
+                    if (options["background"] != "undefined") {
+                        op += "background: " + options["background"];
+                    }
+                    s += format(r,[op])
+                }
+
+                else s += "<tr>"
+
                 var cell = "<td>{0}</td>"
 
                 //for every column add the cell
@@ -76,7 +94,20 @@
             var tbody = table.find("tbody");
 
             for (var i = 0; i < lenght(ds["data"]); i++) {
-                tbody.append(generateRow(ds["data"][i]))
+
+                //if even show grey, if odd show white
+                if (i % 2 == 0) {
+                    tbody.append(generateRow(ds["data"][i]), {
+                        background: "#dfdfdf"
+                    });
+                } else {
+
+                    tbody.append(generateRow(ds["data"][i]), {
+                        
+                    });
+                }
+
+                
             }
 
         }
