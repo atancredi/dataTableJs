@@ -1,20 +1,4 @@
-﻿//dummy dataSet
-var ds = {
-
-    caption: "caption 1",
-    head: ["col1", "col2", "col3"],
-    data: [
-        [3, 2, 3],
-        [3, 4, 5],
-        [6, 7, 8]
-    ],
-    options: {
-
-    }
-
-}
-
-/////////////////////////////// UTILITY
+﻿/////////////////////////////// UTILITY
 //see if checkbox is in the head or body of the table
 function theadTest(sel) {
     return $(sel.parents()[2]).is("thead");
