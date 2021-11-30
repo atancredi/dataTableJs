@@ -17,6 +17,11 @@
 
         .dataTable thead {
             background: #c4c4c4;
+            font-weight: bold;
+        }
+
+        .dataTable tbody tr:hover {
+            background: #c4c4c4 !important;
         }
 
     </style>
@@ -29,7 +34,7 @@
             caption: "caption 1",
             head: ["col1", "col2", "col3"],
             data: [
-                [{}, 2, 3],
+                [3, 2, 3],
                 [3, 4, 5],
                 [6, 7, 8]
             ],
@@ -58,6 +63,8 @@
                 }
 
                 else s += "<tr>"
+
+                //add the select cell
 
                 var cell = "<td>{0}</td>"
 
@@ -111,6 +118,7 @@
 
             //ALLOW MANIPULATION OF THE DATA SET
 
+
             //if an error is raised stop the execution
             if (ErrorFlag != 0) return;
 
@@ -133,14 +141,14 @@
 
                 //if even show grey, if odd show white
                 if (i % 2 == 0) {
-                    tbody.append(generateRow(ds["data"][i]), {
-                        background: "#dfdfdf"
-                    });
+                    tbody.append(generateRow(ds["data"][i], {
+                        
+                    }));
                 } else {
 
-                    tbody.append(generateRow(ds["data"][i]), {
-                        
-                    });
+                    tbody.append(generateRow(ds["data"][i], {
+                        background: "#dfdfdf"
+                    }));
                 }
 
                 
