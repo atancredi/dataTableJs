@@ -128,13 +128,13 @@ function ShowData(container, ds) {
     ///////////////////////////////////////////////////////////////////////////////
 
     //add handler for checkbox selecting
-    $(container.find("input[type=checkbox]")).change(function () {
+    $(container.find("#" + tableID).find("input[type=checkbox]")).change(function () {
 
         //is it a click from the table head?
         var theadTest = $($(this).parents()[2]).is("thead");
         if (theadTest) {
-            for (var i = 0; i < lenght($(container.find("input[type=checkbox]"))) - 1; i++) {
-                $($(container.find("input[type=checkbox]"))[i]).prop("checked", this.checked);
+            for (var i = 0; i < lenght($(container.find("#" +tableID).find("input[type=checkbox]"))) - 1; i++) {
+                $($(container.find("#"+tableID).find("input[type=checkbox]"))[i]).prop("checked", this.checked);
             }
         }
 

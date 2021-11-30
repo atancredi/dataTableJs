@@ -6,6 +6,7 @@
 
     .dataTable tr td:first-child {
         width: 0;
+        padding: 3px;
     }
 
     .dataTable caption {
@@ -20,6 +21,10 @@
         background: #c4c4c4;
         font-weight: bold;
     }
+
+        .dataTable thead td {
+            padding: 3px;
+        }
 
     .dataTable tbody tr:hover {
         background: #c4c4c4 !important;
