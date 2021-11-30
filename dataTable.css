@@ -29,3 +29,11 @@
     .dataTable tbody tr:hover {
         background: #c4c4c4 !important;
     }
+
+@media (max-width: 480px) {
+    
+    thead{
+        display: none;
+    }
+
+}

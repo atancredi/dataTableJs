@@ -1,4 +1,4 @@
-﻿//variable is array
+//variable is array
 function isArray(arr) {
     if (typeof (arr) == "object" && Array.isArray(arr)) return true;
     else return false;
@@ -48,4 +48,9 @@ function format(stringa, array_parametri) {
 
     return stringa_out;
 
+}
+
+//breakpoint for screen size
+function getScreenRes(){
+		return window.screen.availWidth+"x"+window.screen.availHeight
 }
