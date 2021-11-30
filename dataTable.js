@@ -14,6 +14,13 @@ var ds = {
 
 }
 
+/////////////////////////////// UTILITY
+//see if checkbox is in the head or body of the table
+function theadTest(sel) {
+    return $(sel.parents()[2]).is("thead");
+}
+
+//////////////////////////////// CORE
 // SHOW THE DATA IN THE HTML TABLE
 function ShowData(container, ds) {
 
@@ -131,8 +138,7 @@ function ShowData(container, ds) {
     $(container.find("#" + tableID).find("input[type=checkbox]")).change(function () {
 
         //is it a click from the table head?
-        var theadTest = $($(this).parents()[2]).is("thead");
-        if (theadTest) {
+        if (theadTest($(this))) {
             for (var i = 0; i < lenght($(container.find("#" +tableID).find("input[type=checkbox]"))) - 1; i++) {
                 $($(container.find("#"+tableID).find("input[type=checkbox]"))[i]).prop("checked", this.checked);
             }
@@ -172,4 +178,21 @@ function selectAllContainer(container) {
     for (var i = 0; i < lenght(cb) - 1; i++) {
         $(cb[i]).prop("checked", test);
     }
+}
+
+//GET THE CHECK STATE OF ALL THE TABLES IN A CONTAINER
+//the returned data is an array containing the tableID, the row number and the value of the checkbox
+function getCheckStatus(container) {
+    var ReturnData = [];
+    var tables = $(container.find("table"));
+    var l = lenght(tables) - 1;
+    for (var i = 0; i < l; i++) {
+        var cbs = $($(tables[i]).find("input[type=checkbox]"));
+        var ll = lenght(cbs) - 1;
+        for (var j = 0; j < ll; j++) {
+            if (!theadTest($(cbs[j])))
+                ReturnData.push([i + 1, j - 1, $(cbs[j]).prop("checked")])
+        }
+    }
+    return ReturnData;
 }
