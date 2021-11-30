@@ -78,6 +78,31 @@
                 return "dataTable-"+(GetTableNumber()+1)
             }
 
+            //CHECK TYPES IN THE DATA SET
+            function checkDataType(inp) {
+                if (!(typeof (inp) == "number" || typeof (inp) == "string"))
+                    throw new Error("Forbidden data type for "+typeof(inp)+" '"+inp+"'");
+            }
+            ds["head"].forEach(function (value, index) {
+                try {
+                    checkDataType(value);
+                } catch (e) {
+                    console.log(e)
+                }
+            });
+            ds["data"].forEach(function (value, index) {
+                try {
+                    value.forEach(function (v, i) {
+                        checkDataType(v);
+                    });
+                } catch (e) {
+                    console.log(e)
+                }
+            });
+
+            //ALLOW MANIPULATION OF THE DATA SET
+
+
             //append the table
             var tableID = GetTableID();
             container.append('<table class="dataTable" id="' + tableID + '" ></table>');
