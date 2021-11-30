@@ -29,7 +29,7 @@
             caption: "caption 1",
             head: ["col1", "col2", "col3"],
             data: [
-                [1, 2, 3],
+                [{}, 2, 3],
                 [3, 4, 5],
                 [6, 7, 8]
             ],
@@ -78,6 +78,11 @@
                 return "dataTable-"+(GetTableNumber()+1)
             }
 
+            //rollback function in case of error
+            function rollback(container) {
+                container.html("");
+            }
+
             //CHECK TYPES IN THE DATA SET
             function checkDataType(inp) {
                 if (!(typeof (inp) == "number" || typeof (inp) == "string"))
@@ -87,7 +92,7 @@
                 try {
                     checkDataType(value);
                 } catch (e) {
-                    console.log(e)
+                    console.log(e);
                 }
             });
             ds["data"].forEach(function (value, index) {
@@ -96,7 +101,7 @@
                         checkDataType(v);
                     });
                 } catch (e) {
-                    console.log(e)
+                    console.log(e);
                 }
             });
 
