@@ -149,3 +149,27 @@ function ShowData(container, ds) {
     });
 
 }
+
+//HANDLE THE SELECTION OF ALL THE ITEMS IN DIFFERENT TABLES IN THE SAME CONTAINER
+function selectAllContainer(container) {
+    var cb = container.find("input[type=checkbox]")
+
+    //count if there are more checked or unchecked
+    var c = 0, uc = 0;
+    for (var i = 0; i < lenght(cb) - 1; i++) {
+        if ($(cb[i]).prop("checked") == true)
+            c += 1;
+        else
+            uc += 1;
+    }
+
+    var test;
+    if (c == uc)
+        test = true;
+    else
+        (c > uc) ? test = false : test = true;
+
+    for (var i = 0; i < lenght(cb) - 1; i++) {
+        $(cb[i]).prop("checked", test);
+    }
+}
