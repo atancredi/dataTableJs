@@ -65,6 +65,7 @@
                 else s += "<tr>"
 
                 //add the select cell
+                s += '<td class="selectCell"><input type="checkbox"></td>';
 
                 var cell = "<td>{0}</td>"
 
@@ -153,6 +154,29 @@
 
                 
             }
+
+            ///////////////////////////////////////////////////////////////////////////////
+
+            //add handler for checkbox selecting
+            $(container.find("input[type=checkbox]")).change(function () {
+
+                //is it a click from the table head?
+                var theadTest = $($(this).parents()[2]).is("thead");
+                if (theadTest) {
+                    for (var i = 0; i < lenght($(container.find("input[type=checkbox]"))) - 1; i++) {
+                        $($(container.find("input[type=checkbox]"))[i]).prop("checked", this.checked);
+                    }
+                }
+
+                if (this.checked) {
+
+                } else {
+
+                    //if there are none left with the check and the head one has it remove
+
+
+                }
+            });
 
         }
 
