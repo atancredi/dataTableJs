@@ -42,6 +42,8 @@
         // SHOW THE DATA IN THE HTML TABLE
         function ShowData(container,ds) {
 
+            var ErrorFlag = 0;
+
             function generateRow(rowData, options) {
                 var s = "";
 
@@ -93,6 +95,7 @@
                     checkDataType(value);
                 } catch (e) {
                     console.log(e);
+                    ErrorFlag = 1;
                 }
             });
             ds["data"].forEach(function (value, index) {
@@ -102,11 +105,14 @@
                     });
                 } catch (e) {
                     console.log(e);
+                    ErrorFlag = 1;
                 }
             });
 
             //ALLOW MANIPULATION OF THE DATA SET
 
+            //if an error is raised stop the execution
+            if (ErrorFlag != 0) return;
 
             //append the table
             var tableID = GetTableID();
