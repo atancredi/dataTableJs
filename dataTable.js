@@ -8,8 +8,9 @@ function theadTest(sel) {
 // SHOW THE DATA IN THE HTML TABLE
 function ShowData(container, ds) {
 
-    var ErrorFlag = 0;
+    //----------------------------------------------------- §Functions§
 
+    //GENERATION FUNCTIONS
     function generateRow(rowData, options) {
         var s = "";
 
@@ -39,6 +40,36 @@ function ShowData(container, ds) {
         return s;
     }
 
+    function DesktopRuntime(table) {
+        //append the table head
+        table.append('<thead>' + generateRow(ds["head"]) + '</thead>');
+
+        //create the table body
+        table.append("<tbody></tbody>");
+        var tbody = table.find("tbody");
+
+        for (var i = 0; i < lenght(ds["data"]); i++) {
+
+            //if even show grey, if odd show white
+            if (i % 2 == 0) {
+                tbody.append(generateRow(ds["data"][i], {
+
+                }));
+            } else {
+
+                tbody.append(generateRow(ds["data"][i], {
+                    background: "#dfdfdf"
+                }));
+            }
+
+
+        }
+    }
+
+    function MobileRuntime(table) {
+
+    }
+
     //enumerate the currently rendered tables
     function GetTableNumber() {
         return $('table.dataTable').length;
@@ -59,27 +90,32 @@ function ShowData(container, ds) {
         if (!(typeof (inp) == "number" || typeof (inp) == "string"))
             throw new Error("Forbidden data type for " + typeof (inp) + " '" + inp + "'");
     }
-    ds["head"].forEach(function (value, index) {
+    function TypeControl(ds) {
         try {
-            checkDataType(value);
-        } catch (e) {
-            console.log(e);
-            ErrorFlag = 1;
-        }
-    });
-    ds["data"].forEach(function (value, index) {
-        try {
-            value.forEach(function (v, i) {
-                checkDataType(v);
+            ds["head"].forEach(function (value, index) {
+                checkDataType(value);
+            });
+            ds["data"].forEach(function (value, index) {
+                value.forEach(function (v, i) {
+                    checkDataType(v);
+                });
             });
         } catch (e) {
             console.log(e);
             ErrorFlag = 1;
         }
-    });
+    }
+
+    //----------------------------------------------------- §Main§
+
+    var ErrorFlag = 0;
+
+    //check if the user is using a mobile device
+    var userAgent = "";
+    (getScreenRes().split("x")[0] <= 480) ? userAgent = "mobile" : userAgent = "not mobile";
 
     //ALLOW MANIPULATION OF THE DATA SET
-
+    TypeControl(ds);
 
     //if an error is raised stop the execution
     if (ErrorFlag != 0) return;
@@ -92,39 +128,18 @@ function ShowData(container, ds) {
     //append the caption of the table if exists
     table.append("<caption>" + ds["caption"] + "</caption>");
 
-    //append the table head
-    table.append('<thead>' + generateRow(ds["head"]) + '</thead>');
+    // HERE DIVIDE THE MOBILE FROM THE DESKTOP GENERATION
+    (userAgent == "mobile") ? DesktopRuntime(table) : MobileRuntime(table);
 
-    //create the table body
-    table.append("<tbody></tbody>");
-    var tbody = table.find("tbody");
-
-    for (var i = 0; i < lenght(ds["data"]); i++) {
-
-        //if even show grey, if odd show white
-        if (i % 2 == 0) {
-            tbody.append(generateRow(ds["data"][i], {
-
-            }));
-        } else {
-
-            tbody.append(generateRow(ds["data"][i], {
-                background: "#dfdfdf"
-            }));
-        }
-
-
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////
+    //----------------------------------------------------- §User Interaction§
 
     //add handler for checkbox selecting
     $(container.find("#" + tableID).find("input[type=checkbox]")).change(function () {
 
         //is it a click from the table head?
         if (theadTest($(this))) {
-            for (var i = 0; i < lenght($(container.find("#" +tableID).find("input[type=checkbox]"))) - 1; i++) {
-                $($(container.find("#"+tableID).find("input[type=checkbox]"))[i]).prop("checked", this.checked);
+            for (var i = 0; i < lenght($(container.find("#" + tableID).find("input[type=checkbox]"))) - 1; i++) {
+                $($(container.find("#" + tableID).find("input[type=checkbox]"))[i]).prop("checked", this.checked);
             }
         }
 
